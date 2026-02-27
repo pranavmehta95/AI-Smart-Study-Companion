@@ -4,6 +4,7 @@ import api from '../services/api';
 import toast from 'react-hot-toast';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { BookOpen, Brain } from 'lucide-react';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 
 const AnalyticsPage = () => {
     const navigate = useNavigate();
@@ -42,16 +43,7 @@ const AnalyticsPage = () => {
         }
     };
 
-    const renderMarkdown = (text) => {
-        if (!text) return null;
-        return text.split('\n').map((line, i) => {
-            if (line.startsWith('## ')) return <h3 key={i} style={{ color: 'var(--primary-light)', marginBottom: '0.5rem', marginTop: '1rem', fontSize: '1rem' }}>{line.slice(3)}</h3>;
-            if (line.startsWith('# ')) return <h2 key={i} style={{ color: 'var(--text-primary)', marginBottom: '0.75rem', marginTop: '1.25rem' }}>{line.slice(2)}</h2>;
-            if (line.startsWith('- ')) return <li key={i} style={{ color: 'var(--text-secondary)', marginBottom: '0.25rem', marginLeft: '1rem', fontSize: '0.875rem' }}>{line.slice(2)}</li>;
-            if (!line.trim()) return <br key={i} />;
-            return <p key={i} style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '0.4rem' }}>{line}</p>;
-        });
-    };
+
 
     if (loading) return <div className="loading-state" style={{ minHeight: 'calc(100vh - 70px)' }}><div className="spinner" /></div>;
 
@@ -141,7 +133,7 @@ const AnalyticsPage = () => {
                     <h3 className="section-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Brain size={18} style={{ color: 'var(--primary-light)' }} /> AI Personalized Study Plan
                     </h3>
-                    <div>{renderMarkdown(studyPlan)}</div>
+                    <MarkdownRenderer content={studyPlan} />
                 </div>
             )}
         </div>

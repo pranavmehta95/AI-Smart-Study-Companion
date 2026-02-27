@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import { Sparkles, BookOpen, Hash, FileText, Search, Download } from 'lucide-react';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 
 const SummaryPage = () => {
     const { id } = useParams();
@@ -58,21 +59,6 @@ const SummaryPage = () => {
         }
     };
 
-    const renderMarkdown = (text) => {
-        if (!text) return null;
-        const lines = text.split('\n');
-        return lines.map((line, i) => {
-            if (line.startsWith('### ')) return <h3 key={i} style={{ marginTop: '1.25rem', marginBottom: '0.5rem', fontSize: '1rem', color: 'var(--primary-light)' }}>{line.slice(4)}</h3>;
-            if (line.startsWith('## ')) return <h2 key={i} style={{ marginTop: '1.5rem', marginBottom: '0.5rem', fontSize: '1.15rem' }}>{line.slice(3)}</h2>;
-            if (line.startsWith('# ')) return <h1 key={i} style={{ marginTop: '1.5rem', marginBottom: '0.75rem', fontSize: '1.3rem' }}>{line.slice(2)}</h1>;
-            if (line.startsWith('**') && line.endsWith('**')) return <p key={i} style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>{line.slice(2, -2)}</p>;
-            if (line.startsWith('- ') || line.startsWith('* ')) return <li key={i} style={{ color: 'var(--text-secondary)', marginBottom: '0.3rem', marginLeft: '1rem' }}>{line.slice(2)}</li>;
-            if (line.match(/^\d+\. /)) return <li key={i} style={{ color: 'var(--text-secondary)', marginBottom: '0.3rem', marginLeft: '1rem' }}>{line.replace(/^\d+\. /, '')}</li>;
-            if (!line.trim()) return <br key={i} />;
-            return <p key={i} style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem', lineHeight: 1.7 }}>{line}</p>;
-        });
-    };
-
     if (loading || generating) {
         return (
             <div className="loading-state" style={{ minHeight: 'calc(100vh - 70px)' }}>
@@ -116,10 +102,10 @@ const SummaryPage = () => {
                 </div>
 
                 {activeTab === 'summary' && (
-                    <div className="markdown-content">{renderMarkdown(doc?.summary || 'No summary available. Click Regenerate.')}</div>
+                    <MarkdownRenderer content={doc?.summary || 'No summary available. Click Regenerate.'} />
                 )}
                 {activeTab === 'notes' && (
-                    <div className="markdown-content">{renderMarkdown(doc?.notes || 'No notes available. Click Regenerate.')}</div>
+                    <MarkdownRenderer content={doc?.notes || 'No notes available. Click Regenerate.'} />
                 )}
                 {activeTab === 'keywords' && (
                     <div className="keywords-grid">
@@ -140,7 +126,7 @@ const SummaryPage = () => {
                         </div>
                         {searchResult && (
                             <div className="card" style={{ background: 'var(--bg-overlay)' }}>
-                                <div className="markdown-content">{renderMarkdown(searchResult)}</div>
+                                <MarkdownRenderer content={searchResult} />
                             </div>
                         )}
                     </div>

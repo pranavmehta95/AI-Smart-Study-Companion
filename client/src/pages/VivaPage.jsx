@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import { Send, Trophy } from 'lucide-react';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 
 const VivaPage = () => {
     const { id } = useParams();
@@ -91,7 +92,7 @@ const VivaPage = () => {
                             if (ex.type === 'ai') return (
                                 <div key={i} className="viva-bubble ai">
                                     <div className="bubble-avatar ai-avatar">🤖</div>
-                                    <div className="bubble-content ai-bubble">{ex.text}</div>
+                                    <div className="bubble-content ai-bubble"><MarkdownRenderer content={ex.text} /></div>
                                 </div>
                             );
                             if (ex.type === 'user') return (
@@ -102,12 +103,13 @@ const VivaPage = () => {
                             );
                             if (ex.type === 'feedback') return (
                                 <div key={i} className="feedback-box" style={{ marginLeft: '3.5rem' }}>
-                                    <strong>Feedback (Score: {ex.score}/10):</strong> {ex.text}
+                                    <strong>Feedback (Score: {ex.score}/10):</strong>
+                                    <MarkdownRenderer content={ex.text} />
                                 </div>
                             );
                             if (ex.type === 'ideal') return (
                                 <div key={i} style={{ marginLeft: '3.5rem', background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.2)', borderRadius: 'var(--radius-sm)', padding: '0.75rem', fontSize: '0.85rem', color: 'var(--accent-light)' }}>
-                                    {ex.text}
+                                    <MarkdownRenderer content={ex.text} />
                                 </div>
                             );
                             return null;

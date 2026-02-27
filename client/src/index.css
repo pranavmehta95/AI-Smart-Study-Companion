@@ -1140,53 +1140,205 @@ body {
 .markdown-content {
   color: var(--text-primary);
   line-height: 1.8;
+  font-size: 0.925rem;
+}
+
+.markdown-content>*:first-child {
+  margin-top: 0;
+}
+
+.markdown-content>*:last-child {
+  margin-bottom: 0;
 }
 
 .markdown-content h1,
 .markdown-content h2,
-.markdown-content h3 {
-  margin: 1.5rem 0 0.75rem;
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
   color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .markdown-content h1 {
   font-size: 1.5rem;
+  margin: 1.75rem 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .markdown-content h2 {
   font-size: 1.25rem;
+  margin: 1.5rem 0 0.65rem;
+  color: var(--primary-light);
 }
 
 .markdown-content h3 {
   font-size: 1.1rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.markdown-content h4 {
+  font-size: 1rem;
+  margin: 1rem 0 0.4rem;
 }
 
 .markdown-content p {
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   color: var(--text-secondary);
+  line-height: 1.8;
 }
 
 .markdown-content ul,
 .markdown-content ol {
-  padding-left: 1.5rem;
+  padding-left: 1.75rem;
   margin-bottom: 1rem;
   color: var(--text-secondary);
 }
 
+.markdown-content ul {
+  list-style-type: disc;
+}
+
+.markdown-content ol {
+  list-style-type: decimal;
+}
+
+.markdown-content ul ul {
+  list-style-type: circle;
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.markdown-content ul ul ul {
+  list-style-type: square;
+}
+
 .markdown-content li {
   margin-bottom: 0.4rem;
+  line-height: 1.7;
+}
+
+.markdown-content li>p {
+  margin-bottom: 0.3rem;
 }
 
 .markdown-content strong {
   color: var(--text-primary);
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
+  color: var(--text-secondary);
 }
 
 .markdown-content code {
   background: var(--bg-overlay);
-  padding: 0.2rem 0.4rem;
+  padding: 0.15rem 0.45rem;
   border-radius: 4px;
   font-size: 0.85em;
   color: var(--accent-light);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  border: 1px solid var(--border);
+}
+
+.markdown-content pre {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.markdown-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.markdown-content blockquote {
+  border-left: 3px solid var(--primary);
+  background: rgba(124, 58, 237, 0.06);
+  padding: 0.75rem 1.25rem;
+  margin: 0.75rem 0 1rem 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-secondary);
+}
+
+.markdown-content blockquote p {
+  margin-bottom: 0.35rem;
+}
+
+.markdown-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.markdown-content thead {
+  background: var(--bg-overlay);
+}
+
+.markdown-content th {
+  padding: 0.65rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.markdown-content td {
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.markdown-content tbody tr:hover {
+  background: rgba(124, 58, 237, 0.04);
+}
+
+.markdown-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-content hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+  margin: 1.5rem 0;
+}
+
+.markdown-content a {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  border-radius: var(--radius-sm);
 }
 
 /* ====== ANALYTICS ====== */
