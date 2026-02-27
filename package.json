@@ -1,0 +1,25 @@
+{
+  "name": "ai-smart-study-companion",
+  "version": "1.0.0",
+  "description": "An AI-powered full-stack web application that transforms your study materials into interactive learning experiences.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,cyan\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pranavmehta95/AI-Smart-Study-Companion.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pranavmehta95/AI-Smart-Study-Companion/issues"
+  },
+  "homepage": "https://github.com/pranavmehta95/AI-Smart-Study-Companion#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
