@@ -23,7 +23,9 @@ const RegisterPage = () => {
             toast.success(`Welcome, ${data.user.name}! 🎉`);
             navigate('/dashboard');
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Registration failed');
+            console.error('Registration error detail:', err);
+            const msg = err.response?.data?.message || err.message || 'Registration failed';
+            toast.error(msg);
         } finally {
             setLoading(false);
         }
