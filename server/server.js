@@ -40,7 +40,7 @@ mongoose.connect(process.env.MONGO_URI)
             const clientPath = path.join(__dirname, '../client/dist');
             app.use(express.static(clientPath));
 
-            app.get('*', (req, res) => {
+            app.get('*any', (req, res) => {
                 res.sendFile(path.join(clientPath, 'index.html'));
             });
         }
