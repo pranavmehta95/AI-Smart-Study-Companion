@@ -6,13 +6,19 @@ const admin = require('firebase-admin');
 
 // Initialize Firebase Admin (only once)
 if (!admin.apps.length) {
-    admin.initializeApp({
-        credential: admin.credential.cert({
-            projectId: process.env.FIREBASE_PROJECT_ID,
-            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-            privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-        }),
-    });
+    try {
+        const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n').replace(/"/g, '');
+        admin.initializeApp({
+            credential: admin.credential.cert({
+                projectId: process.env.FIREBASE_PROJECT_ID,
+                clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+                privateKey: privateKey,
+            }),
+        });
+        console.log('✅ Firebase Admin Initialized');
+    } catch (err) {
+        console.error('❌ Firebase Admin init error:', err.message);
+    }
 }
 
 const generateToken = (id) =>
@@ -20,15 +26,23 @@ const generateToken = (id) =>
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
+    console.log(`[Auth] Registration attempt for: ${req.body.email}`);
     try {
         const { name, email, password } = req.body;
-        if (!name || !email || !password)
+        if (!name || !email || !password) {
+            console.warn('[Auth] Registration failed: Missing fields');
             return res.status(400).json({ message: 'All fields required' });
+        }
 
         const exists = await User.findOne({ email });
-        if (exists) return res.status(400).json({ message: 'Email already registered' });
+        if (exists) {
+            console.warn(`[Auth] Registration failed: Email ${email} already exists`);
+            return res.status(400).json({ message: 'Email already registered' });
+        }
 
         const user = await User.create({ name, email, password });
+        console.log(`[Auth] User created successfully: ${user.email}`);
+
         const token = generateToken(user._id);
 
         res.status(201).json({
@@ -36,6 +50,7 @@ router.post('/register', async (req, res) => {
             user: { id: user._id, name: user.name, email: user.email, avatar: user.avatar }
         });
     } catch (err) {
+        console.error('[Auth] Registration error:', err.message);
         res.status(500).json({ message: err.message });
     }
 });
