@@ -60,8 +60,8 @@ mongoose.connect(process.env.MONGO_URI)
             const clientPath = path.join(__dirname, '../client/dist');
             app.use(express.static(clientPath));
 
-            // Catch-all route should be the LAST route
-            app.get('*', (req, res, next) => {
+            // Catch-all route to serve the React app
+            app.get('(.*)', (req, res, next) => {
                 // If it's an API request that fell through, don't serve index.html
                 if (req.url.startsWith('/api')) {
                     return next();
