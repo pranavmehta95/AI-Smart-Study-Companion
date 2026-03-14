@@ -50,32 +50,28 @@ app.use('/api/progress', progressRoutes);
 app.get('/api/health', (req, res) =>
     res.json({ status: 'OK', message: 'AI Study Companion API is running 🚀' }));
 
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+    const clientPath = path.join(__dirname, '../client/dist');
+    app.use(express.static(clientPath));
+
+    // Express 5 catch-all syntax requires a named parameter
+    app.get('/:any*', (req, res, next) => {
+        if (req.url.startsWith('/api')) return next();
+        res.sendFile(path.join(clientPath, 'index.html'));
+    });
+}
+
 // Connect to MongoDB
+const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('✅ MongoDB Connected');
-
-        // Serve static assets in production
-        if (process.env.NODE_ENV === 'production') {
-            const clientPath = path.join(__dirname, '../client/dist');
-            app.use(express.static(clientPath));
-
-            // Catch-all route to serve the React app
-            app.get('(.*)', (req, res, next) => {
-                // If it's an API request that fell through, don't serve index.html
-                if (req.url.startsWith('/api')) {
-                    return next();
-                }
-                res.sendFile(path.join(clientPath, 'index.html'));
-            });
-        }
-
-        const PORT = process.env.PORT || 5000;
         app.listen(PORT, '0.0.0.0', () =>
             console.log(`🚀 Server running on port ${PORT}`));
     })
     .catch(err => {
-        console.error('❌ MongoDB connection error:', err.message);
+        console.error('❌ Database/Server Error:', err.message);
         process.exit(1);
     });
 
