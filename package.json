@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,cyan\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "install:all": "npm install && npm install --prefix server && npm install --prefix client",
-    "build": "npm run install:all && npm run build --prefix client",
+    "build": "npm install && npm install --prefix client --include=dev && npm run build --prefix client",
     "start": "node server/server.js"
   },
   "repository": {
