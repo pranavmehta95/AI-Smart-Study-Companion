@@ -22,13 +22,13 @@ const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:3000',
-    process.env.RENDER_EXTERNAL_URL, // Auto-added by Render if they use the web service
+    process.env.FRONTEND_URL, // e.g., https://ai-smart-study.vercel.app
 ].filter(Boolean);
 
 app.use(cors({
     origin: (origin, callback) => {
-        // Allow same-origin or allowed origins
-        if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.onrender.com')) {
+        // Allow same-origin or allowed origins, and Vercel preview deployments
+        if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -49,18 +49,6 @@ app.use('/api/progress', progressRoutes);
 // Health check
 app.get('/api/health', (req, res) =>
     res.json({ status: 'OK', message: 'AI Study Companion API is running 🚀' }));
-
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-    const clientPath = path.join(__dirname, '../client/dist');
-    app.use(express.static(clientPath));
-
-    // Express 5 catch-all syntax requires a named parameter
-    app.get('/:any*', (req, res, next) => {
-        if (req.url.startsWith('/api')) return next();
-        res.sendFile(path.join(clientPath, 'index.html'));
-    });
-}
 
 // Connect to MongoDB
 const PORT = process.env.PORT || 5000;
