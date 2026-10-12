@@ -4,10 +4,10 @@
   "description": "An AI-powered full-stack web application that transforms your study materials into interactive learning experiences.",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,cyan\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
-    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
-    "build": "npm install && npm install --prefix server && npm install --prefix client --include=dev && npm run build --prefix client",
-    "start": "node server/server.js"
+    "dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,cyan\" \"cd server && bun run dev\" \"cd client && bun run dev\"",
+    "install:all": "bun install && cd server && bun install && cd ../client && bun install",
+    "build": "bun install && cd server && bun install && cd ../client && bun install && bun run build",
+    "start": "cd server && bun run start"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,11 @@
   },
   "homepage": "https://github.com/pranavmehta95/AI-Smart-Study-Companion#readme",
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "@types/bun": "latest"
+  },
+  "private": true,
+  "peerDependencies": {
+    "typescript": "^7"
   }
 }
