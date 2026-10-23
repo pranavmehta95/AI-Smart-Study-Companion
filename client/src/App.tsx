@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import Navbar from './components/Navbar';
+
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -19,7 +19,6 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <div className="app">
-          <Navbar />
           <main className="main-content">
             <Routes>
               <Route path="/" element={<LandingPage />} />
