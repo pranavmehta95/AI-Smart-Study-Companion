@@ -4,10 +4,12 @@ const isLocal =
   window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1';
 
+const envApiUrl = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
+
 const api = axios.create({
-  baseURL: isLocal
-    ? 'http://localhost:5001/api'
-    : ((import.meta.env.VITE_API_URL as string | undefined) ?? ''),
+  baseURL:
+    envApiUrl ||
+    (isLocal ? 'http://localhost:5001/api' : '/api'),
 });
 
 api.interceptors.request.use((config) => {
